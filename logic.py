@@ -11,6 +11,7 @@ class Pokemon:
         self.pokemon_number = randint(1,1000)
         self.img = self.get_img()
         self.name = self.get_name()
+        self.name = self.get_food()
 
         Pokemon.pokemons[pokemon_trainer] = self
 
@@ -20,7 +21,7 @@ class Pokemon:
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()
-            return (data['sprites'][0]['other'],['official-artwork'],['front-default'])
+            return (data['sprites']['other']['official-artwork']['front_default'])
         else:
             return "Pikachu"
     
@@ -39,9 +40,12 @@ class Pokemon:
     def info(self):
         return f"Имя твоего покеомона: {self.name}"
 
+    def get_food(self):
+        return 'Покемоны все едят'
+
     # Метод класса для получения картинки покемона
     def show_img(self):
         return self.img
 
-
+print('бот готов')
 
