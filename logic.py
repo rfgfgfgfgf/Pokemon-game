@@ -1,6 +1,6 @@
 from random import randint
 import requests
-
+import datetime
 class Pokemon:
     pokemons = {}
     # Инициализация объекта (конструктор)
@@ -14,6 +14,7 @@ class Pokemon:
         self.power = randint(30,60)
         self.hp = randint(200,400)
 
+        self.last_feed_time = datetime.now()
 
 
         Pokemon.pokemons[pokemon_trainer] = self
@@ -63,11 +64,21 @@ class Pokemon:
         else:
             enemy.hp = 0
             return f"Победа @{self.pokemon_trainer} над @{enemy.pokemon_trainer}! "
+        
+    def feed(self, feed_interval = 20, hp_increase = 10 ):
+        current_time = datetime.current()  
+        delta_time = datetime.timedelta(seconds=feed_interval)  
+        if (current_time - self.last_feed_time) > delta_time:
+            self.hp += hp_increase
+            self.last_feed_time = current_time
+            return f"Здоровье покемона увеличено. Текущее здоровье: {self.hp}"
+        else:
+            return f"Следующее время кормления покемона: {self.current_time+delta_time}"  
 
 
 class Wizard(Pokemon):
-        def info(self):
-            return 'У тебя покемон-волшебник \n\n'+ super().info()
+        def feed(self):
+            return super().feed(feed_interval=10, hp_increase=10)
 
 class Fighter(Pokemon):  
     def attack(self, enemy):
@@ -77,8 +88,8 @@ class Fighter(Pokemon):
         self.power -= super_power
         return result + f"\nБоец применил супер-атаку силой:{super_power} "
 
-    def info(self):
-        return 'У тебя покемон-боец  \n\n'+ super().info()
+        def feed(self):
+            return super().feed(feed_interval=20, hp_increase=20)
 
 
 print('Бот готов!')

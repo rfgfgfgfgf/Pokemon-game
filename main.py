@@ -41,7 +41,7 @@ def attack_pok(message):
 def send_pokemon_info(message):
     if message.from_user.username in Pokemon.pokemons.keys():
         pok = Pokemon.pokemons[message.from_user.username]
-        bot.send_message(message.chat.id, f'{pok}')
+        bot.send_message(message.chat.id, pok.info())
     else:
         bot.send_message(message.chat.id, 'У вас нет покемона')
 
