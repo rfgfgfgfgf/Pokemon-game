@@ -37,12 +37,18 @@ def attack_pok(message):
     else:
         bot.send_message(message.chat.id, "Чтобы атаковать, нужно ответить на сообщения того, кого хочешь атаковать")
 
-
+@bot.message_handler(command='info')
+def send_pokemon_info(message):
+    if message.from_user.username in Pokemon.pokemons.keys():
+        pok = Pokemon.pokemons[message.from_user.username]
+        bot.send_message(message.chat.id, f'{pok}')
+    else:
+        bot.send_message(message.chat.id, 'У вас нет покемона')
 
 
 @bot.message_handler(commands=['hello'])
 def send_welcome(message):
-    bot.reply_to(message, "Привет! Я Шлепа бот. Мой создатель - rfgfgfgfgf. Мои команды: /go, /hello, /attack")
+    bot.reply_to(message, "Привет! Я Шлепа бот. Мой создатель - rfgfgfgfgf. Мои команды: /go, /hello, /attack, /info")
 
 
 
